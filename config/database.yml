@@ -63,7 +63,7 @@ development:
 test:
   <<: *default
   database: georegions_test
-  
+
   schema_search_path: "public,postgis"
 
 # As with config/secrets.yml, you never want to store sensitive information,
