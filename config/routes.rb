@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   get 'zctas/lookup'
 
   root 'home#index'

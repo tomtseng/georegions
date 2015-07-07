@@ -11,14 +11,8 @@ The shapefile of choice holds ZCTA data and is found from
 [census data](https://www.census.gov/geo/maps-data/data/cbf/cbf_zcta.html).
 
 ## Dependencies
-* Install GEOS
-* Install Proj
-* Install postgres and run `gem install pg`
-  * Then, after starting up the database, create a user with `psql -c "CREATE
-    ROLE georegions_dev WITH SUPERUSER LOGIN PASSWORD 'pw';"` (or if you already
-    have a user role to use, adjust the username/password in config/database.yml
-    appropriately)
-* Install postgis
+* Install GEOS?
+* Install Proj?
 
 ## Versions
 * Ruby 2.2.1
@@ -26,23 +20,15 @@ The shapefile of choice holds ZCTA data and is found from
 
 ## Setup
 * Install gems: `bundle install`
+* Modify config/database.yml to use your mysql username and password
 * Create db: `rake db:create`
-* You might have to run `psql -d georegions_production -c "CREATE EXTENSION postgis;`?
 * Run migrations: `rake db:migrate`
 * Download the shapefile above and unzip it in a directory named "shapefile".
 * Load shapefile data into database: `rails runner script/read.rb`
 * Run the server: `rails server`
 
 ## Notes
-* I chose PostgreSQL because I heard that it has better support for spatial
-  objects. However, MySQL actually should be fine if it is version 5.6.1+. The
-  problem that I thought MySQL had was that it calculated intersections of
-  objects using only the minimum bounding rectangles, but as of version 5.6.1,
-  MySQL implements `ST_Intersects` which calculates intersections with actual
-  geometry.
-* The location model is currently unused, and there are unused functions in the
-  ZCTA model.
+* The location model is currently unused.
 * [This article](http://daniel-azuma.com/articles/georails/part-8) was a
-  valuable resource. Note that it is outdated in some places. For example,
-  `rset_rgeo_factory_for_column` is deprecated in RGeo. Nonetheless, most of the
-  content in this repository is thanks to that article.
+  valuable resource. Most of the content in this repository is thanks to that
+  article.

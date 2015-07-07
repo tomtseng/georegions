@@ -2,6 +2,7 @@
 <p>Enter the coordinates as decimals where negative latitudes are south and negative longitudes are west.</p>
 <p>For example, the coordinates of the Space Needle are 47.6204, -122.3491.</p>
 <p>Note that this only works for locations within the U.S.A.</p>
+
 <%= form_tag("/zctas/lookup", method: "get") do %>
   <%= label_tag(:lat, "Latitude:") %>
   <%= text_field_tag(:lat) %>&deg;
