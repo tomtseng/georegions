@@ -14,8 +14,8 @@ The shapefile of choice holds ZCTA data and is found from
 * Install GEOS
 * Install Proj
 * Install postgres and run `gem install pg`
-  * Then, after starting up the database, create a user with `psql -c "create
-    role georegions_dev with createdb login password 'pw';"` (or if you already
+  * Then, after starting up the database, create a user with `psql -c "CREATE
+    ROLE georegions_dev WITH SUPERUSER LOGIN PASSWORD 'pw';"` (or if you already
     have a user role to use, adjust the username/password in config/database.yml
     appropriately)
 * Install postgis
@@ -27,8 +27,7 @@ The shapefile of choice holds ZCTA data and is found from
 ## Setup
 * Install gems: `bundle install`
 * Create db: `rake db:create`
-* Run `psql -d georegions_production -c "CREATE EXTENSION postgis;` (and you
-  might have to do the same for the test and production databases?)
+* You might have to run `psql -d georegions_production -c "CREATE EXTENSION postgis;`?
 * Run migrations: `rake db:migrate`
 * Download the shapefile above and unzip it in a directory named "shapefile".
 * Load shapefile data into database: `rails runner script/read.rb`

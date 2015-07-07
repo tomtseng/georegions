@@ -26,14 +26,9 @@ ActiveRecord::Schema.define(version: 20150707163801) do
 
   add_index "locations", ["loc"], name: "index_locations_on_loc", using: :gist
 
-  create_table "zcta", force: :cascade do |t|
-    t.integer  "zcta"
-    t.geometry "region", limit: {:srid=>3785, :type=>"polygon"}
-  end
-
   create_table "zctas", force: :cascade do |t|
     t.integer  "zcta"
-    t.geometry "region", limit: {:srid=>3785, :type=>"polygon"}
+    t.geometry "region", limit: {:srid=>3785, :type=>"multi_polygon"}
   end
 
   add_index "zctas", ["region"], name: "index_zctas_on_region", using: :gist
