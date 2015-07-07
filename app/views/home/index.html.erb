@@ -1,0 +1,10 @@
+<p>Input latitude and longitude coordinates below to find the zip code in which the location is found.</p>
+<p>Enter the coordinates as decimals where negative latitudes are south and negative longitudes are west.</p>
+<p>For example, the coordinates of the Space Needle are 47.6204, -122.3491.</p>
+<%= form_tag("/zcta/lookup", method: "get") do %>
+  <%= label_tag(:lat, "Latitude:") %>
+  <%= text_field_tag(:lat) %>
+  <%= label_tag(:lon, "Longitude:") %>
+  <%= text_field_tag(:lon) %>
+  <%= submit_tag("Go") %>
+<% end %>
