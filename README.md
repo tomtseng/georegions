@@ -28,8 +28,7 @@ The shapefile of choice holds ZCTA data and is found from
 * Run the server: `rails server`
 
 ## Notes
-* The location model is currently unused, and there are unused functions in the
-  ZCTA model.
+* The location model is currently unused.
 * [This article](http://daniel-azuma.com/articles/georails/part-8) was a
   valuable resource. Most of the content in this repository is thanks to that
   article.
