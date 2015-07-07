@@ -1,10 +1,13 @@
-<p>Input latitude and longitude coordinates below to find the zip code in which the location is found.</p>
+<p>Input coordinates and a radius in meters below to find zip codes that fall within a circle of that radius around the given point.</p>
 <p>Enter the coordinates as decimals where negative latitudes are south and negative longitudes are west.</p>
 <p>For example, the coordinates of the Space Needle are 47.6204, -122.3491.</p>
+<p>Note that this only works for locations within the U.S.A.</p>
 <%= form_tag("/zcta/lookup", method: "get") do %>
   <%= label_tag(:lat, "Latitude:") %>
-  <%= text_field_tag(:lat) %>
+  <%= text_field_tag(:lat) %>&deg;
   <%= label_tag(:lon, "Longitude:") %>
-  <%= text_field_tag(:lon) %>
+  <%= text_field_tag(:lon) %>&deg;
+  <%= label_tag(:radius, "Radius in meters:") %>
+  <%= text_field_tag(:radius) %>m
   <%= submit_tag("Go") %>
 <% end %>

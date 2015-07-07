@@ -11,4 +11,9 @@ class Zcta < ActiveRecord::Base
     ewkb = EWKB.generate(FACTORY.point(geom))
     where("ST_Intersects(region, ST_GeomFromEWKB(E'\\\\x#{ewkb}'))")
   end
+
+  def self.near_latlon(lat, lon, radius)
+    ewkb = EWKB.generate(FACTORY.point(lon, lat).projection)
+    where("ST_DWithin(region, ST_GeomFromEWKB(E'\\\\x#{ewkb}'), #{radius})")
+  end
 end
