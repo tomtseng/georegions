@@ -22,8 +22,6 @@ The shapefile of choice holds ZCTA data and is found from
 * Install gems: `bundle install`
 * Modify config/database.yml to use your mysql username and password
 * Create db: `rake db:create`
-* Run `psql -d georegions_production -c "CREATE EXTENSION postgis;` (and you
-  might have to do the same for the test and production databases?)
 * Run migrations: `rake db:migrate`
 * Download the shapefile above and unzip it in a directory named "shapefile".
 * Load shapefile data into database: `rails runner script/read.rb`
