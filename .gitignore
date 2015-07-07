@@ -12,3 +12,4 @@
 !/log/.keep
 /tmp
 /shapefile
+config/database.yml
