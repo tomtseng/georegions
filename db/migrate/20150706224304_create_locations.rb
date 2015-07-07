@@ -2,7 +2,7 @@ class CreateLocations < ActiveRecord::Migration
   def change
     create_table :locations, :options => 'ENGINE=MyISAM' do |t|
       t.string :name
-      t.column :loc, :point, :null => false, :srid => 3785
+      t.column :loc, :point, :null => false, :srid => SRID
 
       t.timestamps null: false
     end

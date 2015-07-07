@@ -1,6 +1,4 @@
 class Zcta < ActiveRecord::Base
-  SRID = 3785
-
   FACTORY = RGeo::Geographic.simple_mercator_factory
   set_rgeo_factory_for_column(:region, FACTORY.projection_factory)
 
