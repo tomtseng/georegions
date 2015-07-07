@@ -1,4 +1,7 @@
 class Location < ActiveRecord::Base
+  FACTORY = RGeo::Geographic.simple_mercator_factory
+  set_rgeo_factory_for_column(:loc, FACTORY.projection_factory)
+
   def loc_projected
     self.loc
   end
