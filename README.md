@@ -10,7 +10,7 @@ Goals for this project:
 The shapefile of choice holds ZCTA data and is found from
 [census data](https://www.census.gov/geo/maps-data/data/cbf/cbf_zcta.html).
 
-# What does this thing do?
+## What does this thing do?
 Enter in a lat-long coordinates and a radius. The site will spit out a list of
 zipcode regions that are within that radius around the given point.
 
@@ -38,6 +38,5 @@ zipcode regions that are within that radius around the given point.
 * PostgreSQL vs. MySQL
 
 ## Notes
-* The location model is currently unused. Consider removing it.
-* [This article](http://daniel-azuma.com/articles/georails/part-8) was an
-  extremely valuable resource.
+* [This article](http://daniel-azuma.com/articles/georails/part-8) was a
+  valuable resource.
