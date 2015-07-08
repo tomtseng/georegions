@@ -1,6 +1,5 @@
 class Zcta < ActiveRecord::Base
   FACTORY = RGeo::Geographic.simple_mercator_factory
-  CART_FACTORY = RGeo::Cartesian.preferred_factory
 
   set_rgeo_factory_for_column(:region, FACTORY.projection_factory)
 
@@ -13,9 +12,10 @@ class Zcta < ActiveRecord::Base
     nearby = nearby_raw.map { |zcta|
       {
         :zcta => zcta.zcta,
-        :distance => point.distance(CART_FACTORY.parse_wkt(zcta.region.to_s))
+        :distance => point.distance(FACTORY.projection_factory.parse_wkt(zcta.region.to_s))
       }
     }
     nearby.sort_by { |k| k[:distance] }
   end
+
 end

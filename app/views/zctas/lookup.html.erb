@@ -8,7 +8,7 @@
   <% @nearby.each do |loc| %>
   <tr>
     <td><%= loc[:zcta] %></td>
-    <td><%= loc[:distance] %></td>
+    <td><%= loc[:distance].round(1) %></td>
   </tr>
   <% end %>
 </table>
