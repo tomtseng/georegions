@@ -12,10 +12,9 @@ class Zcta < ActiveRecord::Base
     nearby = nearby_raw.map { |zcta|
       {
         :zcta => zcta.zcta,
-        :distance => point.distance(FACTORY.projection_factory.parse_wkt(zcta.region.to_s))
+        :distance => point.distance(FACTORY.projection_factory.multi_polygon(zcta.region))
       }
     }
     nearby.sort_by { |k| k[:distance] }
   end
-
 end

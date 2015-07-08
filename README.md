@@ -10,6 +10,10 @@ Goals for this project:
 The shapefile of choice holds ZCTA data and is found from
 [census data](https://www.census.gov/geo/maps-data/data/cbf/cbf_zcta.html).
 
+# What does this thing do?
+Enter in a lat-long coordinates and a radius. The site will spit out a list of
+zipcode regions that are within that radius around the given point.
+
 ## Dependencies
 * Install GEOS?
 * Install Proj?
@@ -24,11 +28,16 @@ The shapefile of choice holds ZCTA data and is found from
 * Create db: `rake db:create`
 * Run migrations: `rake db:migrate`
 * Download the shapefile above and unzip it in a directory named "shapefile".
-* Load shapefile data into database: `rails runner script/read.rb`
+* Load shapefile data into database: `rails runner script/read.rb`. This will
+  take a few minutes.
 * Run the server: `rails server`
+* Navigate to `localhost:3000`
+
+## Potential Speedups
+* Split the zipcode regions into smaller polygons
+* PostgreSQL vs. MySQL
 
 ## Notes
-* The location model is currently unused.
-* [This article](http://daniel-azuma.com/articles/georails/part-8) was a
-  valuable resource. Most of the content in this repository is thanks to that
-  article.
+* The location model is currently unused. Consider removing it.
+* [This article](http://daniel-azuma.com/articles/georails/part-8) was an
+  extremely valuable resource.
