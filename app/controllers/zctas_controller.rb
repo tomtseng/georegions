@@ -3,6 +3,6 @@ class ZctasController < ApplicationController
     lat = params[:lat].to_f
     lon = params[:lon].to_f
     radius = params[:radius].to_f
-    @zctas = Zcta.near_latlon(lat, lon, radius)
+    @nearby = Zcta.near_latlon(lat, lon, radius)
   end
 end

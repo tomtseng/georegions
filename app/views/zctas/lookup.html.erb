@@ -1,3 +1,14 @@
 <h2>Results</h2>
 
-<%= render @zctas %>
+<table>
+  <tr>
+    <th>Zip Code</th>
+    <th>Distance</th>
+  </tr>
+  <% @nearby.each do |loc| %>
+  <tr>
+    <td><%= loc[:zcta] %></td>
+    <td><%= loc[:distance] %></td>
+  </tr>
+  <% end %>
+</table>
