@@ -9,7 +9,7 @@ class Zcta < ActiveRecord::Base
     scale = proj_to_meters_scale_factor(lat)
     radius_in_m = radius / scale
     point = FACTORY.point(lon, lat).projection
-    nearby = select("zcta, ST_Distance(region, ST_GeomFromWKB('#{point.as_binary}', #{point.srid})) AS distance")
+    nearby = select("id, zcta, ST_Distance(region, ST_GeomFromWKB('#{point.as_binary}', #{point.srid})) AS distance")
               .where("ST_Intersects(region, ST_Buffer(ST_GeomFromWKB('#{point.as_binary}', #{point.srid}), #{radius_in_m}))")
               .order("distance")
     nearby.each { |zcta| zcta.distance *= scale }
