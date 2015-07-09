@@ -55,13 +55,13 @@ zipcode regions that are within that radius around the given point.
   arbitrary regions like PostGIS's does. It's also not obvious to me how I can
   accurately find all regions near a point given geographic coordinates in MySQL
   (in PostGIS, I could again just use `ST_DWithin`). I could certainly find
-  nearby points by fiddling with the haversine formula, but it's not obvious to
-  me how to generalize this to polygons.
+  nearby points by fiddling with the haversine formula, but it seems like it
+  would be difficult to generalize this to polygons.
 
 ## Potential Speedups
 * Split the zipcode regions into smaller polygons
 
-## Actual Speedup
+## Actual Speedups
 * PostgreSQL vs. MySQL
   * Some informal tests suggest that PostgresSQL + PostGIS is faster, and
     significantly more so in large cases. Here's a table of database lookup
@@ -78,7 +78,7 @@ zipcode regions that are within that radius around the given point.
 | 100000       | 57.8            | 14.4                             |
 | 1000000      | 2890            | 185.6                            |
 | 10000000     | 23121           | 614.5                            |
-| 10000000000  | don't do this   | 395                              |
+| 10000000000  | 23162           | 430.2                            |
 ```
 
 These results were produced through the most excellent and rigorous method of
