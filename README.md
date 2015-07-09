@@ -68,8 +68,9 @@ zipcode regions that are within that radius around the given point.
     times for zipcodes near the Space Needle. Also, PostGreSQL results are faster
     if you give the same query multiple times in a row, which gives another speedup
     of 30-60%.
+```
 | Distance (m) | MySQL time (ms) | PostGIS time, first request (ms) |
-|--------------|-----------------|----------------------------------|
+| ------------ | --------------- | -------------------------------- |
 | 0            | 0.6             | 1.0                              |
 | 100          | 0.8             | 0.8                              |
 | 1000         | 0.8             | 1.8                              |
@@ -78,6 +79,7 @@ zipcode regions that are within that radius around the given point.
 | 1000000      | 2890            | 185.6                            |
 | 10000000     | 23121           | 614.5                            |
 | 10000000000  | don't do this   | 395                              |
+```
 
 These results were produced through the most excellent and rigorous method of
 entering queries into the rails console by hand a couple of times.
