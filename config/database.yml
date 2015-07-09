@@ -15,17 +15,19 @@
 # gem 'pg'
 #
 default: &default
-  adapter: mysql2spatial
+  adapter: postgis
   encoding: utf8
+  schema_search_path: "public,postgis"
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
-  username: root
-  password: YOURPASSWORDHERE
 
 development:
   <<: *default
   database: georegions_development
+
+  username: georegions_dev
+  password: pw
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
