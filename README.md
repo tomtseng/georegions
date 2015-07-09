@@ -15,16 +15,19 @@ Enter in a lat-long coordinates and a radius. The site will spit out a list of
 zipcode regions that are within that radius around the given point.
 
 ## Dependencies
-* Install GEOS?
-* Install Proj?
+* GEOS?
+* Proj?
+* MySQL
 
 ## Versions
 * Ruby 2.2.1
 * Rails 4.2.0
+* MySQL 5.6.25
 
 ## Setup
 * Install gems: `bundle install`
-* Modify config/database.yml to use your mysql username and password
+* Modify config/database.yml to use your mysql username and password (this
+  probably isn't very secure?)
 * Create db: `rake db:create`
 * Run migrations: `rake db:migrate`
 * Download the shapefile above and unzip it in a directory named "shapefile".
@@ -34,7 +37,7 @@ zipcode regions that are within that radius around the given point.
 * Navigate to `localhost:3000`
 
 
-## Problems
+## Issues
 * Distances are currently calculated by straight line on the Web Mercator
   projection. However, these rhumb lines are, in general, not the shortest
   paths. A true shortest path will be curved upon projection. (This is not
@@ -67,7 +70,7 @@ zipcode regions that are within that radius around the given point.
     significantly more so in large cases. Here's a table of database lookup
     times for zipcodes near the Space Needle. Also, PostGreSQL results are faster
     if you give the same query multiple times in a row, which gives another speedup
-    of 30-60%.
+    of 30-60% on my machine.
 ```
 | Distance (m) | MySQL time (ms) | PostGIS time, first request (ms) |
 | ------------ | --------------- | -------------------------------- |
@@ -82,8 +85,9 @@ zipcode regions that are within that radius around the given point.
 ```
 
 These results were produced through the most excellent and rigorous method of
-entering queries into the rails console by hand a couple of times.
+entering queries into the rails console by hand on my laptop a couple of times.
 
 ## Notes
 * [This article](http://daniel-azuma.com/articles/georails/part-8) was a
   valuable resource.
+* Don't bother running `rake test` because none of the tests work.
