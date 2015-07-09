@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20150707163801) do
 
-# Could not dump table "locations" because of following NoMethodError
-#   undefined method `any?' for true:TrueClass
-
 # Could not dump table "zctas" because of following NoMethodError
 #   undefined method `any?' for true:TrueClass
 
