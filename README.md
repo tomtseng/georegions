@@ -33,17 +33,16 @@ zipcode regions that are within that radius around the given point.
 * Run the server: `rails server`
 * Navigate to `localhost:3000`
 
-## Potential Speedups
-* Split the zipcode regions into smaller polygons
-* PostgreSQL vs. MySQL
 
 ## Problems
 * Distances are currently calculated by straight line on the Web Mercator
   projection. However, these rhumb lines are, in general, not the shortest
-  paths. A true shortest path will be curved upon projection.
+  paths. A true shortest path will be curved upon projection. (This is not
+  significant for small distances.)
 * Distances are only locally true because I am currently scaling distances
   solely based on the latitude of the original point. Given a large radius in
   which latitude changes a lot, the scale factor may change significantly.
+  (Again, insignificant for small distance)
 * MySQL is not as powerful as PostGIS. For example, I am finding regions nearby
   a point by using `ST_Intersect` after calling `ST_Buffer` on a point, which is
   less efficient and less transparent than just using PostGIS's `ST_DWithin`.
@@ -58,6 +57,30 @@ zipcode regions that are within that radius around the given point.
   (in PostGIS, I could again just use `ST_DWithin`). I could certainly find
   nearby points by fiddling with the haversine formula, but it's not obvious to
   me how to generalize this to polygons.
+
+## Potential Speedups
+* Split the zipcode regions into smaller polygons
+
+## Actual Speedup
+* PostgreSQL vs. MySQL
+  * Some informal tests suggest that PostgresSQL + PostGIS is faster, and
+    significantly more so in large cases. Here's a table of database lookup
+    times for zipcodes near the Space Needle. Also, PostGreSQL results are faster
+    if you give the same query multiple times in a row, which gives another speedup
+    of 30-60%.
+| Distance (m) | MySQL time (ms) | PostGIS time, first request (ms) |
+|--------------|-----------------|----------------------------------|
+| 0            | 0.6             | 1.0                              |
+| 100          | 0.8             | 0.8                              |
+| 1000         | 0.8             | 1.8                              |
+| 10000        | 2.56            | 2.6                              |
+| 100000       | 57.8            | 14.4                             |
+| 1000000      | 2890            | 185.6                            |
+| 10000000     | 23121           | 614.5                            |
+| 10000000000  | don't do this   | 395                              |
+
+These results were produced through the most excellent and rigorous method of
+entering queries into the rails console by hand a couple of times.
 
 ## Notes
 * [This article](http://daniel-azuma.com/articles/georails/part-8) was a
