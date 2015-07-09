@@ -58,9 +58,6 @@ zipcode regions that are within that radius around the given point.
   (in PostGIS, I could again just use `ST_DWithin`). I could certainly find
   nearby points by fiddling with the haversine formula, but it's not obvious to
   me how to generalize this to polygons.
-* Schema aren't dumped into db/schema.rb correctly. This seems to be a problem
-  with adding a spatial index to the database table. (The spatial index is
-  working; queries are indeed faster with it.)
 
 ## Notes
 * [This article](http://daniel-azuma.com/articles/georails/part-8) was a
