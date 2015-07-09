@@ -3,18 +3,16 @@ class Zcta < ActiveRecord::Base
 
   set_rgeo_factory_for_column(:region, FACTORY.projection_factory)
 
+  # returns ActiveRecord::Relation. Each element in the Relation has a .zcta
+  # field (zipcode) and a .distance field (distance from given lat-lon point)
   def self.near_latlon(lat, lon, radius)
     scale = proj_to_meters_scale_factor(lat)
     radius_in_m = radius / scale
     point = FACTORY.point(lon, lat).projection
-    nearby_raw = where("ST_Intersects(region, ST_Buffer(ST_GeomFromWKB('#{point.as_binary}', #{point.srid}), #{radius_in_m}))")
-    nearby = nearby_raw.map { |zcta|
-      {
-        :zcta => zcta.zcta,
-        :distance => point.distance(FACTORY.projection_factory.multi_polygon(zcta.region)) * scale
-      }
-    }
-    nearby.sort_by { |k| k[:distance] }
+    nearby = select("zcta, ST_Distance(region, ST_GeomFromWKB('#{point.as_binary}', #{point.srid})) AS distance")
+              .where("ST_Intersects(region, ST_Buffer(ST_GeomFromWKB('#{point.as_binary}', #{point.srid}), #{radius_in_m}))")
+              .order("distance")
+    nearby.each { |zcta| zcta.distance *= scale }
   end
 
   private
