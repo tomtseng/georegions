@@ -1,11 +1,11 @@
 class CreateZctas < ActiveRecord::Migration
   def change
-    create_table :zctas, :options => 'ENGINE=MyISAM' do |t|
+    create_table :zctas do |t|
       t.integer :zcta
-      t.column :region, :multipolygon, :null => false, :srid => 3785
+      t.multi_polygon :region, :srid => 3785
     end
     change_table :zctas do |t|
-      t.index :region, :spatial => true
+      t.index :region, using: :gist
     end
   end
 end

@@ -1,16 +1,15 @@
 class Zcta < ActiveRecord::Base
-  FACTORY = RGeo::Geographic.simple_mercator_factory
-
-  set_rgeo_factory_for_column(:region, FACTORY.projection_factory)
+  EWKB = RGeo::WKRep::WKBGenerator.new(:type_format => :ewkb,
+    :emit_ewkb_srid => true, :hex_format => true)
 
   # returns ActiveRecord::Relation. Each element in the Relation has a .zcta
   # field (zipcode) and a .distance field (distance from given lat-lon point)
   def self.near_latlon(lat, lon, radius)
     scale = proj_to_meters_scale_factor(lat)
     radius_in_m = radius / scale
-    point = FACTORY.point(lon, lat).projection
-    nearby = select("id, zcta, ST_Distance(region, ST_GeomFromWKB('#{point.as_binary}', #{point.srid})) AS distance")
-              .where("ST_Intersects(region, ST_Buffer(ST_GeomFromWKB('#{point.as_binary}', #{point.srid}), #{radius_in_m}))")
+    ewkb = EWKB.generate(FACTORY.point(lon, lat).projection)
+    nearby = select("id, zcta, ST_Distance(region, ST_GeomFromEWKB(E'\\\\x#{ewkb}')) AS distance")
+              .where("ST_DWithin(region, ST_GeomFromEWKB(E'\\\\x#{ewkb}'), #{radius_in_m})")
               .order("distance")
     nearby.each { |zcta| zcta.distance *= scale }
   end

@@ -1,5 +1,9 @@
 # Geo region analysis
 
+(This branch is for experimenting with PostGIS again for speed testing purposes.
+Currently still using inaccurate distance calculations using projected
+coordinates.)
+
 This is a project for work.
 
 Goals for this project:
@@ -17,6 +21,12 @@ zipcode regions that are within that radius around the given point.
 ## Dependencies
 * Install GEOS?
 * Install Proj?
+* Install postgres and run `gem install pg`
+  * Then, aftering starting up the database, create a user with
+    `psql -c "create role georegions_dev with createdb login password 'pw';"`
+    (this is not very secure so don't actually do stuff like this in production)
+    (or if you already have a user role to use, adjust the username/password in
+    config/database.yml appropriately)
 
 ## Versions
 * Ruby 2.2.1
@@ -24,7 +34,6 @@ zipcode regions that are within that radius around the given point.
 
 ## Setup
 * Install gems: `bundle install`
-* Modify config/database.yml to use your mysql username and password
 * Create db: `rake db:create`
 * Run migrations: `rake db:migrate`
 * Download the shapefile above and unzip it in a directory named "shapefile".
@@ -36,28 +45,6 @@ zipcode regions that are within that radius around the given point.
 ## Potential Speedups
 * Split the zipcode regions into smaller polygons
 * PostgreSQL vs. MySQL
-
-## Problems
-* Distances are currently calculated by straight line on the Web Mercator
-  projection. However, these rhumb lines are, in general, not the shortest
-  paths. A true shortest path will be curved upon projection.
-* Distances are only locally true because I am currently scaling distances
-  solely based on the latitude of the original point. Given a large radius in
-  which latitude changes a lot, the scale factor may change significantly.
-* MySQL is not as powerful as PostGIS. For example, I am finding regions nearby
-  a point by using `ST_Intersect` after calling `ST_Buffer` on a point, which is
-  less efficient and less transparent than just using PostGIS's `ST_DWithin`.
-  Furthermore, many of the above distance problems could perhaps be fixed by
-  using a PostGIS database with geographic (rather than the current geometric)
-  coordinates. With geographic coordinates in which the spheroidical nature of
-  the Earth is properly accounted for, distances in meters can be calculated
-  correctly. MySQL's support for geographic coordinates is weak: MySQL's
-  `ST_Distance` will only work between points, but I need it to work with
-  arbitrary regions like PostGIS's does. It's also not obvious to me how I can
-  accurately find all regions near a point given geographic coordinates in MySQL
-  (in PostGIS, I could again just use `ST_DWithin`). I could certainly find
-  nearby points by fiddling with the haversine formula, but it's not obvious to
-  me how to generalize this to polygons.
 
 ## Notes
 * [This article](http://daniel-azuma.com/articles/georails/part-8) was a
