@@ -1,9 +1,12 @@
 # Geo region analysis
 
-(This branch is experimenting with PostGIS and trying to do accurate
-calculations without projections)
-
 This is a project for work.
+
+(This branch is experimenting with PostGIS and trying to do accurate
+calculations without projections. It is slower, and the accuracy gains aren't
+useful for my purposes. Also, `RGeo::Geographic.spherical_factory` is
+mysteriously unable to load one of the ZCTA regions from the shapefile, so zip
+code 31901 is unfortunately M.I.A. for this version. Sorry, Columbus, Georgia.)
 
 Goals for this project:
 * Import shapefile data into database
