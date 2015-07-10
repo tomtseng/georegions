@@ -1,5 +1,5 @@
 RGeo::ActiveRecord::SpatialFactoryStore.instance.tap do |config|
-  FACTORY = RGeo::Geographic.simple_mercator_factory
+  FACTORY = RGeo::Geographic.spherical_factory(:srid => 4326)
 
-  config.default = FACTORY.projection_factory
+  config.default = FACTORY
 end

@@ -1,8 +1,7 @@
 # Geo region analysis
 
-(This branch is for experimenting with PostGIS again for speed testing purposes.
-Currently still using inaccurate distance calculations using projected
-coordinates.)
+(This branch is experimenting with PostGIS and trying to do accurate
+calculations without projections)
 
 This is a project for work.
 

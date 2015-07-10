@@ -17,18 +17,9 @@ ActiveRecord::Schema.define(version: 20150707163801) do
   enable_extension "plpgsql"
   enable_extension "postgis"
 
-  create_table "locations", force: :cascade do |t|
-    t.string   "name"
-    t.geometry "loc",        limit: {:srid=>3785, :type=>"point"}
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-  end
-
-  add_index "locations", ["loc"], name: "index_locations_on_loc", using: :gist
-
   create_table "zctas", force: :cascade do |t|
-    t.integer  "zcta"
-    t.geometry "region", limit: {:srid=>3785, :type=>"multi_polygon"}
+    t.integer   "zcta"
+    t.geography "region", limit: {:srid=>4326, :type=>"multi_polygon", :geographic=>true}
   end
 
   add_index "zctas", ["region"], name: "index_zctas_on_region", using: :gist

@@ -5,17 +5,9 @@ class Zcta < ActiveRecord::Base
   # returns ActiveRecord::Relation. Each element in the Relation has a .zcta
   # field (zipcode) and a .distance field (distance from given lat-lon point)
   def self.near_latlon(lat, lon, radius)
-    scale = proj_to_meters_scale_factor(lat)
-    radius_in_m = radius / scale
-    ewkb = EWKB.generate(FACTORY.point(lon, lat).projection)
-    nearby = select("id, zcta, ST_Distance(region, ST_GeomFromEWKB(E'\\\\x#{ewkb}')) AS distance")
-              .where("ST_DWithin(region, ST_GeomFromEWKB(E'\\\\x#{ewkb}'), #{radius_in_m})")
-              .order("distance")
-    nearby.each { |zcta| zcta.distance *= scale }
-  end
-
-  private
-  def self.proj_to_meters_scale_factor(lat)
-    Math::cos(lat * Math::PI / 180)
+    ewkb = EWKB.generate(FACTORY.point(lon, lat))
+    select("id, zcta, ST_Distance(region, ST_GeomFromEWKB(E'\\\\x#{ewkb}')) AS distance")
+      .where("ST_DWithin(region, ST_GeomFromEWKB(E'\\\\x#{ewkb}'), #{radius})")
+      .order("distance")
   end
 end
