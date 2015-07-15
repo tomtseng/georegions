@@ -18,15 +18,19 @@ def compare(numLines=33143,
       approx[vals[0]] = float(vals[1])
 
   sumAbsError = 0.0
+  maxError = 0.0
   count = 0
 
   for k in actual:
     if k not in approx:
       sys.stderr.write("No such zipcode: %s\n" % str(k))
     elif actual[k] != 0:
-        sumAbsError += abs((approx[k] - actual[k])/actual[k])
-        count += 1
+      error = abs((approx[k] - actual[k])/actual[k])
+      sumAbsError += error
+      maxError = max(maxError, error)
+      count += 1
 
   print "Mean absolute percentage error of %f%%" % (sumAbsError * 100 / count)
+  print "Max percentage error of %f%%" % (maxError * 100)
 
 compare(*sys.argv[1:])
