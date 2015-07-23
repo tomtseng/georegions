@@ -20,8 +20,8 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
-  username: root
-  password: YOURPASSWORDHERE
+  username: <% ENV.fetch('DB_USER', 'YOUR_USERNAME_HERE') %>
+  password: <%= ENV.fetch('DB_PASS', 'YOUR_PASSWORD_HERE') %>
 
 development:
   <<: *default
