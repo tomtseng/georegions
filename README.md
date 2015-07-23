@@ -8,11 +8,11 @@ This is a project for work.
 
 Goals for this project:
 * Import shapefile data into database
+  * The shapefile of choice holds ZCTA data from the U.S. census and is found
+    [here](https://www.census.gov/geo/maps-data/data/cbf/cbf_zcta.html).
 * Given a region, want to be able to find other regions that are within a small
   radius
 
-The shapefile of choice holds ZCTA data and is found from
-[census data](https://www.census.gov/geo/maps-data/data/cbf/cbf_zcta.html).
 
 ## What does this thing do?
 Enter in a lat-long coordinates and a radius. The site will spit out a list of
@@ -35,17 +35,15 @@ zipcode regions that are within that radius around the given point.
 ## Setup
 * Install gems: `bundle install`
 * Create db: `rake db:create`
-* Run migrations: `rake db:migrate`
-* Download the shapefile above and unzip it in a directory named "shapefile".
-* Load shapefile data into database: `rails runner script/read.rb`. This will
-  take a few minutes.
+* Setup db: `rake db:setup`
+* Import ZCTA data: `rake db:add_zctas`. This will take a few minutes.
 * Run the server: `rails server`
 * Navigate to `localhost:3000`
 
 ## Potential Speedups
 * Split the zipcode regions into smaller polygons
-* PostgreSQL vs. MySQL
 
 ## Notes
 * [This article](http://daniel-azuma.com/articles/georails/part-8) was a
   valuable resource.
+* Don't bother running `rake test` because none of the tests work.
