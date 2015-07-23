@@ -10,7 +10,7 @@ class Zcta < ActiveRecord::Base
     radius_in_proj_dist = radius / scale
     point = FACTORY.point(lon, lat).projection
     nearby = select("id, zcta, ST_Distance(region, ST_GeomFromWKB('#{point.as_binary}', #{point.srid})) AS distance")
-              .where("ST_Intersects(region, ST_Buffer(ST_GeomFromWKB('#{point.as_binary}', #{point.srid}), #{radius_in_proj_dist}))")
+              .where("ST_Intersects(region, ST_Buffer(ST_GeomFromText(?, ?), ?))", point.as_text, point.srid, radius_in_proj_dist)
               .order("distance")
     nearby.each { |zcta| zcta.distance *= scale }
   end

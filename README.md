@@ -32,9 +32,7 @@ zipcode regions that are within that radius around the given point.
   probably isn't very secure?)
 * Create db: `rake db:create`
 * Setup db: `rake db:setup`
-* Download the shapefile above and unzip it in the directory named "shapefile".
-* Load shapefile data into database: `rails runner script/read.rb`. This will
-  take a few minutes.
+* Import ZCTA data: `rake db:add_zctas`. This will take a few minutes.
 * Run the server: `rails server`
 * Navigate to `localhost:3000`
 
